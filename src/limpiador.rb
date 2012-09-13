@@ -9,7 +9,7 @@ class Limpiador
     @abs_path
   end
   
-  def texto
+  def criptograma
     @cadenota
   end
   
@@ -21,7 +21,7 @@ class Limpiador
   #abre el archivo
   def abrir
     @cadenota = ""
-    File.open("#{@abs_path}", 'r') do |file|
+    File.open("tmp", 'r') do |file|
       while linea = file.gets
         @cadenota.concat(linea)
       end
@@ -29,12 +29,10 @@ class Limpiador
   end
   
   #metodo para limpiar
-  def limpia_texto
-    puts "Voy a limpiar esta cadena: "
-    puts @cadenota
+  def limpiar_texto
+    #puts @cadenota
     #Utilizando bash para limpiar textos
     system("sed 'y/\á\é\í\ó\ú\ñ\Á\É\Í\Ó\Ú\Ñ/aeiounAEIOUN/' #{@abs_path} > tmp")
-    #system("sed 's/[\n$]/:/g' tmp > tmp3")
     system("cat tmp | tr -d '.' > tmp2")
     system("cat tmp2 | tr -d ',' > tmp")
     system("cat tmp | tr -d '(' > tmp2")
@@ -45,12 +43,12 @@ class Limpiador
     system("cat tmp3 | tr -d '\n' > tmp")
     system("rm tmp2")
     system("rm tmp3")
+    abrir
   end
   
 end #clase
 
-
-l = Limpiador.new('criptograma.txt')
-l.abrir
+#l = Limpiador.new('criptograma.txt')
+#l.limpiar_texto
 #puts l.methods.sort
-l.limpia_texto
+#l.limpia_texto
