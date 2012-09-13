@@ -32,7 +32,7 @@ class Limpiador
   def limpiar_texto
     #puts @cadenota
     #Utilizando bash para limpiar textos
-    system("sed 'y/\á\é\í\ó\ú\ñ\Á\É\Í\Ó\Ú\Ñ/aeiounAEIOUN/' #{@abs_path} > tmp")
+    system("sed 'y/\á\é\í\ó\ú\ñ\ü\Á\É\Í\Ó\Ú\Ñ/aeiounuAEIOUN/' #{@abs_path} > tmp")
     system("cat tmp | tr -d '.' > tmp2")
     system("cat tmp2 | tr -d ',' > tmp")
     system("cat tmp | tr -d '(' > tmp2")
@@ -44,6 +44,13 @@ class Limpiador
     system("rm tmp2")
     system("rm tmp3")
     abrir
+  end
+  
+  def guardar_en_disco(texto_cifrado_)
+    File.open('vigenere_completo.txt', 'w') do |archivo|
+      archivo.puts texto_cifrado_
+    end
+    puts "Ya lo guarde"
   end
   
 end #clase

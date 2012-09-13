@@ -54,7 +54,10 @@ lim = Limpiador.new('criptograma.txt')
 lim.limpiar_texto
 mi_texto = lim.criptograma
 
-t = crea_tabla("MANIACO")
+puts "Ingresa la llave"
+@la_llave = gets.chomp
+
+t = crea_tabla("#{@la_llave}")
 puts(t)
 
 # Necesito el primer texto, el que hice con la llave
@@ -64,9 +67,9 @@ alf = t[0]
 #puts(alf)
 
 # Para hacer la asignacion de valores
-minusculas = "abcdefghijklmnopwrstuvwxyz"
-
-mapeos = Hash.new
+minusculas = "abcdefghijklmnopqrstuvwxyz"
+mi_texto = mi_texto.downcase
+mapeos = Array.new
 
 arreglo_mapeos = Array.new
 
@@ -85,16 +88,48 @@ arreglo_mapeos = Array.new
   end
 end
 
-#puts arreglo_mapeos.to_s
+puts arreglo_mapeos.to_s
 
-map1 = arreglo_mapeos.take(26)
-map2 = arreglo_mapeos.take(52)
-map3 = arreglo_mapeos.take(78)
-map4 = arreglo_mapeos.take(104)
-map5 = arreglo_mapeos.take(130)
-map6 = arreglo_mapeos.take(156)
+map1 = arreglo_mapeos[0..25]
+map2 = arreglo_mapeos[26..51]
+map3 = arreglo_mapeos[52..77]
+map4 = arreglo_mapeos[78..103]
+map5 = arreglo_mapeos[104..129]
+map6 = arreglo_mapeos[130..155]
 
-mapeos = {map1, map2, map3, map4, map5, map6}
+mapeos = [map1, map2, map3, map4, map5, map6]
+
+salida = ""
 
 tam_tex = mi_texto.length
-puts tam_tex
+
+indice = 0
+j = indice
+otra_llave = "#{@la_llave}"
+while indice < tam_tex-1
+  j = j%7
+  tmp = "" << otra_llave[j]
+  num_alfabeto = case
+    when tmp == 'M' then 0
+    when tmp == 'A' then 1
+    when tmp == 'N' then 2
+    when tmp == 'I' then 3
+    when tmp == 'C' then 4
+    when tmp == 'O' then 5
+  end
+  alf_map = mapeos[num_alfabeto].to_s
+  puts "indice " + indice.to_s() + " " + alf_map
+  letra = mi_texto[indice]  
+  #puts letra.chr
+  posicion = alf_map.index(letra.chr)
+  #puts posicion
+  le_toca = "" << alf_map[posicion + 3]
+  salida.concat(le_toca)
+  j = j + 1
+  indice = indice + 1
+  #puts "indice = " + indice.to_s()
+end #while pero me falta meterle todo lo de abajo
+  
+
+puts salida  
+lim.guardar_en_disco(salida)
