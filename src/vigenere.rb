@@ -46,5 +46,5 @@ def crea_tabla(llave)
   return tabla  
 end #end def
 
-t = crea_tabla("SARAMAGO")
+t = crea_tabla("NAPOLEONBONAPARTE")
 puts(t)
