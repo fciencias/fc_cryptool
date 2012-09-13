@@ -2,6 +2,8 @@
 	Archivo para cifrar en vigenere polialfabetico
 =end
 
+require 'limpiador.rb'
+
 #Alfabeto estandar para cifrar
 ALFABETO = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -44,7 +46,7 @@ def crea_tabla(llave)
     tabla.push(aux)
   end#for
   return tabla  
-end #end def
+end#def
 
-t = crea_tabla("NAPOLEONBONAPARTE")
-puts(t)
+#t = crea_tabla("NAPOLEONBONAPARTE")
+#puts(t)
